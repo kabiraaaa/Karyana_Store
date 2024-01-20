@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Karyana Store</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_all">All</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_home_fragment">Hello home fragment</string>
+    <string name="hello_all_fragment">Hello all fragment</string>
+    <string name="fab_add_text">Add</string>
+    <string name="fab_add_content_desc">AddNew</string>
+    <string name="supporting_text">Sample Text</string>
+    <string name="cancel">Cancel</string>
+    <string name="decline">Decline</string>
+    <string name="accept">Accept</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_btn">Add</string>
+    <string name="user_name">Name</string>
+    <string name="user_number">Number</string>
+    <string name="add_new">Add New</string>
+    <string name="all_search_hint">Enter Name</string>
+    <string name="sample_name_text">Sample Name</string>
+</resources>
