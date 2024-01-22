@@ -26,7 +26,10 @@ class UsersRepository(
         userLiveData.postValue(userList)
     }
 
-    suspend fun updateAmountAndModifiedAt(userId: Int, newAmount: Int, newModifiedAt: Long) {
+    suspend fun updateAmountAndModifiedAt(userId: String, amountToAdd: Int) {
+        val currentUser = usersDatabase.userDao().getUserById(userId)
+        val newAmount = currentUser.amount + amountToAdd
+        val newModifiedAt = System.currentTimeMillis()
         usersDatabase.userDao().updateAmountAndModifiedAt(userId, newAmount, newModifiedAt)
     }
 }

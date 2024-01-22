@@ -16,13 +16,22 @@ class AddUserFragment : BottomSheetDialogFragment(R.layout.fragment_add_user) {
 
     private lateinit var binding: FragmentAddUserBinding
     private lateinit var viewModel: AddUserViewModel
+    private lateinit var userRepository: UsersRepository
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding = FragmentAddUserBinding.bind(view)
+        initRepoAndDB()
+        initViewModel()
+        initClicks()
+        super.onViewCreated(view, savedInstanceState)
+    }
 
+    private fun initRepoAndDB() {
         val database = UsersDatabase.getIUsersDatabase(requireActivity().applicationContext)
-        val userRepository = UsersRepository(database)
+        userRepository = UsersRepository(database)
+    }
 
+    private fun initViewModel() {
         viewModel = ViewModelProvider(
             this,
             AddUserViewModelFactory(userRepository)
@@ -33,7 +42,9 @@ class AddUserFragment : BottomSheetDialogFragment(R.layout.fragment_add_user) {
                 dialog?.dismiss()
             }
         }
+    }
 
+    private fun initClicks() {
         binding.btnCancel.setOnClickListener {
             dialog?.dismiss()
         }
@@ -50,6 +61,5 @@ class AddUserFragment : BottomSheetDialogFragment(R.layout.fragment_add_user) {
                 viewModel.addUserToDb(inputName, inputNumber)
             }
         }
-        super.onViewCreated(view, savedInstanceState)
     }
 }

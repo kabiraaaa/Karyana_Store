@@ -8,45 +8,74 @@ import com.example.karyanastore.R
 import com.example.karyanastore.data.repository.UsersRepository
 import com.example.karyanastore.data.source.room.UsersDatabase
 import com.example.karyanastore.databinding.FragmentAddAmountBinding
-import com.example.karyanastore.domain.view_models.AddUserViewModel
-import com.example.karyanastore.domain.view_models.factory.AddUserViewModelFactory
+import com.example.karyanastore.domain.view_models.AddAmountViewModel
+import com.example.karyanastore.domain.view_models.factory.AddAmountViewModelFactory
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class AddAmountFragment : BottomSheetDialogFragment(R.layout.fragment_add_user) {
+class AddAmountFragment(private val userNumber: String) :
+    BottomSheetDialogFragment(R.layout.fragment_add_amount) {
 
     private lateinit var binding: FragmentAddAmountBinding
-    private lateinit var viewModel: AddUserViewModel
+    private lateinit var viewModel: AddAmountViewModel
+    private lateinit var userRepository: UsersRepository
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding = FragmentAddAmountBinding.bind(view)
+        initRepoAndDB()
+        initViewModel()
+        initClicks()
+        super.onViewCreated(view, savedInstanceState)
+    }
 
+    private fun initRepoAndDB() {
         val database = UsersDatabase.getIUsersDatabase(requireActivity().applicationContext)
-        val userRepository = UsersRepository(database)
+        userRepository = UsersRepository(database)
+    }
 
-        viewModel = ViewModelProvider(this, AddUserViewModelFactory(userRepository))[AddUserViewModel::class.java]
+    private fun initViewModel() {
+        viewModel = ViewModelProvider(
+            this,
+            AddAmountViewModelFactory(userRepository)
+        )[AddAmountViewModel::class.java]
 
-        viewModel.userAddedEvent.observe(viewLifecycleOwner) { userAdded ->
-            if (userAdded) {
+        viewModel.amountUpdatedEvent.observe(viewLifecycleOwner) { amountUpdated ->
+            if (amountUpdated) {
                 dialog?.dismiss()
             }
         }
+    }
 
-        binding.btnCancel.setOnClickListener {
-            dialog?.dismiss()
-        }
-        binding.btnAdd.setOnClickListener {
-            val inputName = binding.tfUserName.editText?.text.toString()
-            val inputNumber = binding.tfUserNumber.editText?.text.toString()
-            if (inputName.isBlank() || inputNumber.isBlank()) {
+    private fun initClicks() {
+        binding.btnSubtract.setOnClickListener {
+            val inputAmount = binding.tfUserAmount.editText?.text.toString()
+            if (inputAmount.isBlank()) {
                 Toast.makeText(
                     requireContext(),
-                    "Name and Number cannot be empty",
+                    "Amount cannot be empty",
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
-                viewModel.addUserToDb(inputName, inputNumber)
+                val amount = Integer.parseInt(inputAmount)
+                viewModel.updateAmountToDb(amount, userNumber)
             }
         }
-        super.onViewCreated(view, savedInstanceState)
+
+        binding.btnAdd.setOnClickListener {
+            val inputAmount = binding.tfUserAmount.editText?.text.toString()
+            if (inputAmount.isBlank()) {
+                Toast.makeText(
+                    requireContext(),
+                    "Amount cannot be empty",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                val amount = Integer.parseInt(inputAmount)
+                viewModel.updateAmountToDb(amount, userNumber)
+            }
+        }
+
+        binding.btnUpi.setOnClickListener {
+
+        }
     }
 }

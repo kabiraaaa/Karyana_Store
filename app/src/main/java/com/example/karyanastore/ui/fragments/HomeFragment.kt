@@ -2,7 +2,6 @@ package com.example.karyanastore.ui.fragments
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -13,7 +12,6 @@ import com.example.karyanastore.databinding.FragmentHomeBinding
 import com.example.karyanastore.domain.adapters.AllUserAccountAdapter
 import com.example.karyanastore.domain.view_models.AllUserViewModel
 import com.example.karyanastore.domain.view_models.factory.AllUserViewModelFactory
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class HomeFragment : Fragment(R.layout.fragment_home), AllUserAccountAdapter.OnItemClickListener {
 
@@ -24,7 +22,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), AllUserAccountAdapter.OnI
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding = FragmentHomeBinding.bind(view)
         fabClick()
-        addAmount()
+//        addAmount()
         itemDivider()
         setUpRecyclerView()
         super.onViewCreated(view, savedInstanceState)
@@ -36,11 +34,11 @@ class HomeFragment : Fragment(R.layout.fragment_home), AllUserAccountAdapter.OnI
         }
     }
 
-    private fun addAmount() {
+    /*private fun addAmount() {
         binding.btnAddAmount.setOnClickListener{
             AddAmountFragment().show(childFragmentManager, "AddAmountBottomSheet")
         }
-    }
+    }*/
 
     private fun setUpRecyclerView() {
         val database = UsersDatabase.getIUsersDatabase(requireActivity().applicationContext)
@@ -59,18 +57,26 @@ class HomeFragment : Fragment(R.layout.fragment_home), AllUserAccountAdapter.OnI
     }
 
     override fun onResume() {
-        allUserViewModel.users.observe(requireActivity()) {
+        allUserViewModel.users.observeForever {
+            if (it.isNotEmpty()){
+                allUserAccountAdapter = AllUserAccountAdapter(it,this)
+//                allUserAccountAdapter.notifyDataSetChanged()
+                binding.rvAllAccounts.adapter = allUserAccountAdapter
+            }
+        }
+        /*allUserViewModel.users.observe(requireActivity()) {
             if (it.isNotEmpty()){
                 allUserAccountAdapter = AllUserAccountAdapter(it,this)
                 allUserAccountAdapter.notifyDataSetChanged()
                 binding.rvAllAccounts.adapter = allUserAccountAdapter
             }
-        }
+        }*/
         super.onResume()
     }
 
     override fun onItemClick(position: Int) {
-        val userName = allUserAccountAdapter.getItem(position).userName
-        Toast.makeText(activity, "Clicked on user: $userName", Toast.LENGTH_SHORT).show()
+//        val userName = allUserAccountAdapter.getItem(position).userName
+        val userNumber = allUserAccountAdapter.getItem(position).usernumber
+        AddAmountFragment(userNumber).show(childFragmentManager, "AddAmountBottomSheet")
     }
 }

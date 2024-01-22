@@ -17,6 +17,9 @@ interface UsersDao {
     @Query("SELECT * FROM users WHERE id IN (:userIds)")
     fun loadAllByIds(userIds: IntArray): List<Users>
 
-    @Query("UPDATE users SET amount = :newAmount, modifiedAt = :newModifiedAt WHERE id = :userId")
-    fun updateAmountAndModifiedAt(userId: Int, newAmount: Int, newModifiedAt: Long)
+    @Query("UPDATE users SET amount = :newAmount, modifiedAt = :newModifiedAt WHERE usernumber = :userId")
+    fun updateAmountAndModifiedAt(userId: String, newAmount: Int, newModifiedAt: Long)
+
+    @Query("SELECT * FROM users WHERE usernumber = :userId")
+    fun getUserById(userId: String): Users
 }

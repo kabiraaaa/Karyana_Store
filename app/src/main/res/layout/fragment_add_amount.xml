@@ -12,18 +12,18 @@
         android:id="@+id/tvHeader"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/add_new"
+        android:text="@string/add_amount"
         android:textSize="@dimen/_20sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tfUserName"
+        android:id="@+id/tfUserAmount"
         style="?attr/textInputFilledStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/user_name"
+        android:hint="@string/amount"
         android:paddingVertical="@dimen/_5sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,57 +31,53 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tfUserNumber"
-        style="?attr/textInputFilledStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/user_number"
-        android:paddingVertical="@dimen/_5sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tfUserName">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
-            android:maxLength="10" />
+            android:inputType="number" />
     </com.google.android.material.textfield.TextInputLayout>
-
-    <!--<androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="@dimen/_5sdp"
-        android:paddingVertical="@dimen/_10sdp">-->
 
     <Button
-        android:id="@+id/btnCancel"
-        style="@style/Widget.Material3.Button.TextButton"
-        android:layout_width="wrap_content"
+        android:id="@+id/btnSubtract"
+        style="@style/Widget.Material3.Button.ElevatedButton"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_5sdp"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:text="@string/cancel"
+        android:layout_marginVertical="@dimen/_10sdp"
+        android:fontFamily="sans-serif-black"
+        android:text="@string/subtract"
         android:textSize="@dimen/_12sdp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/btnAdd"
-        app:layout_constraintTop_toBottomOf="@id/tfUserNumber" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tfUserAmount" />
 
     <Button
         android:id="@+id/btnAdd"
         style="@style/Widget.Material3.Button.ElevatedButton"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginHorizontal="@dimen/_5sdp"
+        android:layout_marginVertical="@dimen/_10sdp"
         android:fontFamily="sans-serif-black"
         android:text="@string/add_btn"
         android:textSize="@dimen/_12sdp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tfUserNumber" />
+        app:layout_constraintStart_toEndOf="@id/btnSubtract"
+        app:layout_constraintTop_toBottomOf="@id/tfUserAmount" />
+
+    <Button
+        android:id="@+id/btnUpi"
+        style="@style/Widget.Material3.Button.ElevatedButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_5sdp"
+        android:layout_marginVertical="@dimen/_10sdp"
+        android:fontFamily="sans-serif-black"
+        android:text="@string/share_upi"
+        android:textSize="@dimen/_12sdp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnSubtract" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

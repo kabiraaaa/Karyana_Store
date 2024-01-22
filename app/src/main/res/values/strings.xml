@@ -19,4 +19,8 @@
     <string name="add_new">Add New</string>
     <string name="all_search_hint">Enter Name</string>
     <string name="sample_name_text">Sample Name</string>
+    <string name="add_amount">Add Amount</string>
+    <string name="amount">Amount</string>
+    <string name="share_upi">Share UPI</string>
+    <string name="subtract">Subtract</string>
 </resources>
