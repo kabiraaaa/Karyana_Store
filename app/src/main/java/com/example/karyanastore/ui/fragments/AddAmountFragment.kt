@@ -1,5 +1,7 @@
 package com.example.karyanastore.ui.fragments
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -11,6 +13,8 @@ import com.example.karyanastore.databinding.FragmentAddAmountBinding
 import com.example.karyanastore.domain.view_models.AddAmountViewModel
 import com.example.karyanastore.domain.view_models.factory.AddAmountViewModelFactory
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+
 
 class AddAmountFragment(private val userNumber: String) :
     BottomSheetDialogFragment(R.layout.fragment_add_amount) {
@@ -56,7 +60,9 @@ class AddAmountFragment(private val userNumber: String) :
                 ).show()
             } else {
                 val amount = Integer.parseInt(inputAmount)
-                viewModel.updateAmountToDb(amount, userNumber)
+                viewModel.updateAmountToDb(amount, userNumber, "sub")
+                val message = "Your account is subtracted with ₹$amount"
+                shareOnWhatsapp(userNumber, message)
             }
         }
 
@@ -70,12 +76,40 @@ class AddAmountFragment(private val userNumber: String) :
                 ).show()
             } else {
                 val amount = Integer.parseInt(inputAmount)
-                viewModel.updateAmountToDb(amount, userNumber)
+                viewModel.updateAmountToDb(amount, userNumber, "add")
+                val message = "Your account is added with ₹$amount"
+                shareOnWhatsapp(userNumber, message)
             }
         }
 
         binding.btnUpi.setOnClickListener {
 
+        }
+    }
+
+    private fun shareOnWhatsapp(userNumber: String, message: String) {
+        context?.let {
+            MaterialAlertDialogBuilder(it)
+                .setTitle(resources.getString(R.string.share_on_wa))
+                .setMessage(resources.getString(R.string.supporting_text))
+                .setNegativeButton(resources.getString(R.string.cancel)) { dialog, which ->
+                    dialog.dismiss()
+                }
+                .setPositiveButton(resources.getString(R.string.share)) { dialog, which ->
+                    startActivity(
+                        Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse(
+                                java.lang.String.format(
+                                    "https://api.whatsapp.com/send?phone=%s&text=%s",
+                                    "+91$userNumber",
+                                    message
+                                )
+                            )
+                        )
+                    )
+                }
+                .show()
         }
     }
 }

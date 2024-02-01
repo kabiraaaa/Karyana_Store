@@ -14,9 +14,9 @@ class AddAmountViewModel(private val repository: UsersRepository) : ViewModel() 
     val amountUpdatedEvent: LiveData<Boolean>
         get() = _amountAddedEvent
 
-    fun updateAmountToDb(amount: Int, number: String) {
+    fun updateAmountToDb(amount: Int, number: String, operation:String) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.updateAmountAndModifiedAt(number, amount)
+            repository.updateAmountAndModifiedAt(number, amount, operation)
             _amountAddedEvent.postValue(true)
         }
     }

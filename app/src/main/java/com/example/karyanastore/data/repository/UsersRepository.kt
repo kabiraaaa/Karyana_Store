@@ -21,14 +21,17 @@ class UsersRepository(
         Log.d("RoomDB", "${usersDatabase.userDao().getUsers()}")
     }
 
-    suspend fun getUser(){
+    suspend fun getUser() {
         val userList = usersDatabase.userDao().getUsers()
         userLiveData.postValue(userList)
     }
 
-    suspend fun updateAmountAndModifiedAt(userId: String, amountToAdd: Int) {
+    suspend fun updateAmountAndModifiedAt(userId: String, amountToAdd: Int, operation: String) {
         val currentUser = usersDatabase.userDao().getUserById(userId)
-        val newAmount = currentUser.amount + amountToAdd
+        var newAmount = 0
+        if (operation == "add") newAmount = currentUser.amount + amountToAdd
+        else if (operation == "sub") newAmount = currentUser.amount - amountToAdd
+
         val newModifiedAt = System.currentTimeMillis()
         usersDatabase.userDao().updateAmountAndModifiedAt(userId, newAmount, newModifiedAt)
     }

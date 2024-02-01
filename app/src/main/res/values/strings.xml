@@ -23,4 +23,7 @@
     <string name="amount">Amount</string>
     <string name="share_upi">Share UPI</string>
     <string name="subtract">Subtract</string>
+
+    <string name="share_on_wa">Share on whatsapp!!</string>
+    <string name="share">Share</string>
 </resources>
